@@ -3,7 +3,7 @@
 # iam: This is needed to stop python from treating 'print' as something special; rather than
 # just a builtin. Wonder how much of this hackery is in our future?
 #
-from __future__ import print_function
+
 
 import unittest
 import os

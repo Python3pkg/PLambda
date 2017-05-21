@@ -1,6 +1,6 @@
 """ Entry points into the antlr4 parser.
 """
-from __future__ import print_function
+
 
 import sys
 

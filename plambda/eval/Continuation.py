@@ -243,7 +243,7 @@ class ForCont(Continuation):
                 self.setException(state, "for target is None {0}".format(self.exp.spine[0].location))
                 return
             if isinstance(val, int):
-                self.iterator = iter(range(val))
+                self.iterator = iter(list(range(val)))
                 self.length = val
                 if self.length == 0:
                     self.setReturnState(state, None)
@@ -401,7 +401,7 @@ class ApplyCont(Continuation):
     def handleReturn(self, state):
         val = state.val
 
-        if self.n is 0 and not isinstance(val, Closure) and not callable(val):
+        if self.n is 0 and not isinstance(val, Closure) and not isinstance(val, collections.Callable):
             self.k.excep = PLambdaException('Cannot apply {0}'.format(val))
             state.k = self.k
             state.val = None

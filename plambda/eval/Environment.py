@@ -16,5 +16,5 @@ class Environment(object):
             if keystr in env.frame:
                 return (True, env.frame[keystr])
             else:
-                env = env.next
+                env = env.__next__
         return (False, None)

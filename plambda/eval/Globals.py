@@ -1,9 +1,10 @@
 import inspect
+import collections
 
 try:
     import builtins as BuiltIns
 except ImportError:
-    import __builtin__ as BuiltIns
+    import builtins as BuiltIns
 
 
 pythonGlobals = {}
@@ -15,7 +16,7 @@ def populateGlobals():
             vx = d.get(x)
             if  inspect.isclass(vx) and issubclass(vx, BaseException):
                 continue
-            if callable(vx):
+            if isinstance(vx, collections.Callable):
                 pythonGlobals[x] = vx
         except Exception:
             continue

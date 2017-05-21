@@ -3,7 +3,7 @@ import sys
 
 
 def plambda_intern(string):
-    return sys.intern(string) if sys.version_info[0] > 2 else intern(string)
+    return sys.intern(string) if sys.version_info[0] > 2 else sys.intern(string)
 
 def plambda_unicode(string):
-    return  str(string) if sys.version_info[0] > 2 else unicode(string)
+    return  str(string) if sys.version_info[0] > 2 else str(string)

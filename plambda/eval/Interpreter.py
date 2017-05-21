@@ -4,7 +4,7 @@
 # iam: This is needed to stop python from treating 'print' as something special; rather than
 # just a builtin. Wonder how much of this hackery is in our future?
 #
-from __future__ import print_function
+
 
 import importlib
 import sys
@@ -27,6 +27,7 @@ from .Globals import pythonGlobals
 from ..visitor.Parser import parseFromFile, parseFromString
 
 from .State import State
+import collections
 
 
 def plookup(leaf):
@@ -39,7 +40,7 @@ def plookup(leaf):
 
     try:
         val = eval(leaf.string)
-        if callable(val):
+        if isinstance(val, collections.Callable):
             return (True, val)
     except NameError:
         pass
@@ -256,7 +257,7 @@ class Interpreter(object):
 
     def callCallable(self, fun, vals, _):
         retval = None
-        assert callable(fun)
+        assert isinstance(fun, collections.Callable)
         try:
             retval = fun(*vals)
             return (True, retval)
@@ -340,7 +341,7 @@ class Interpreter(object):
                 return True
 
     def evalKWApply(self, val0, val1, val2, loc):
-        if not callable(val0):
+        if not isinstance(val0, collections.Callable):
             raise PLambdaException('kwapply {0}: 1st argument not callable'.format(str(loc)))
         if not isinstance(val1, list):
             raise PLambdaException('kwapply {0}: 2nd argument not a list'.format(str(loc)))
@@ -493,7 +494,7 @@ class Interpreter(object):
         """Either writes the definitions out to stderr, or the optional StringBuffer passed in.
         """
         func = sb.append if sb else sys.stderr.write
-        for key, value in self.definitions.iteritems():
+        for key, value in self.definitions.items():
             func('{0}  -->  {1}\n'.format(key, value))
         return sb
 
@@ -501,7 +502,7 @@ class Interpreter(object):
         """Either writes the code out to stderr, or the optional StringBuffer passed in.
         """
         func = sb.append if sb else sys.stderr.write
-        for key, value in self.code.iteritems():
+        for key, value in self.code.items():
             func('{0}  -->  {1}\n'.format(key, value))
         return sb
 
@@ -509,6 +510,6 @@ class Interpreter(object):
         """Either writes the UIDs out to stderr, or the optional StringBuffer passed in.
         """
         func = sb.append if sb else sys.stderr.write
-        for key, value in self.uid2object.iteritems():
+        for key, value in self.uid2object.items():
             func('{0}  -->  {1}\n'.format(key, value))
         return sb

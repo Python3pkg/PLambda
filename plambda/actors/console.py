@@ -8,8 +8,8 @@ import traceback
 
 #python 2 vs python 3. if there is a python 4 I quit.
 try:
-    import Tkinter as tk
-    import tkFileDialog as fdialog
+    import tkinter as tk
+    import tkinter.filedialog as fdialog
 except ImportError:
     import tkinter as tk
     import tkinter.filedialog as fdialog
